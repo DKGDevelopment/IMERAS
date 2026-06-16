@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cooperation Agreement — Stornoway Partner Portal</title>
+<meta name="description" content="Every introduction, viewing and closed transaction is tracked against a signed cooperation agreement, so commissions are clear before any client conversation begins.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&family=Source+Serif+Pro:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">STORNOWAY <small>Partner Portal</small></div>
+    <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.main-nav').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="residential.html">Residential</a>
+      <a href="golden-visa.html">Golden Visa</a>
+      <a href="yielding-assets.html">Yielding Assets</a>
+      <a href="commercial.html">Commercial</a>
+      <a href="cooperation.html" class="active">Cooperation</a>
+      <a href="register-a-lead.html">Register a Lead</a>
+    </nav>
+  </div>
+</header>
+
+<section class="agreement">
+  <div>
+    <span class="eyebrow">Working With Us</span>
+    <h2>Cooperation agreement</h2>
+    <p>Every introduction, viewing and closed transaction is tracked against a signed cooperation agreement, so commissions are clear before any client conversation begins.</p>
+    <ul>
+      <li>Defined commission structure per category, confirmed in writing before referral</li>
+      <li>Direct access to presentations, price lists and 3D material for every active asset</li>
+      <li>One inquiry channel per asset — no chasing multiple contacts for the same building</li>
+      <li>Construction-progress updates kept current for every off-plan and in-progress asset</li>
+    </ul>
+  </div>
+  <div class="agreement-card">
+    <span class="eyebrow">For Registered Partners</span>
+    <h3>Request the agreement</h3>
+    <p>Get the current cooperation agreement and commission schedule sent directly to you, or raise a question about a specific category.</p>
+    <a class="btn-light" href="mailto:info@dkg-development.com?subject=Cooperation%20Agreement%20Request">Request by Email</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="brand">STORNOWAY</div>
+      <p style="max-width:260px;font-size:0.85rem;line-height:1.6;margin-top:14px;color:#8FA0A7;">Development portfolio across Athens and Piraeus, maintained for our referral and brokerage partners.</p>
+    </div>
+    <div class="cols">
+      <div class="col">
+        <h4>Portfolio</h4>
+        <a href="residential.html">Residential</a>
+        <a href="golden-visa.html">Golden Visa</a>
+        <a href="yielding-assets.html">Yielding Assets</a>
+        <a href="commercial.html">Commercial</a>
+      </div>
+      <div class="col">
+        <h4>Partners</h4>
+        <a href="cooperation.html">Cooperation Agreement</a>
+        <a href="register-a-lead.html">Register a Lead</a>
+        <a href="mailto:info@dkg-development.com">Contact</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Stornoway Development. Partner Portal.</span>
+    <span>All figures marked “Уточняется” are pending confirmation.</span>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.main-nav a').forEach(function(a){
+    a.addEventListener('click', function(){ document.querySelector('.main-nav').classList.remove('open'); });
+  });
+</script>
+
+</body>
+</html>
