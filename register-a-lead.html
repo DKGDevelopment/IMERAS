@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register a Lead — Stornoway Partner Portal</title>
+<meta name="description" content="Client registration procedure and lead-registration form for Stornoway partners.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&family=Source+Serif+Pro:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">STORNOWAY <small>Partner Portal</small></div>
+    <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.main-nav').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="residential.html">Residential</a>
+      <a href="golden-visa.html">Golden Visa</a>
+      <a href="yielding-assets.html">Yielding Assets</a>
+      <a href="commercial.html">Commercial</a>
+      <a href="cooperation.html">Cooperation</a>
+      <a href="register-a-lead.html" class="active">Register a Lead</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ===== Registration procedure block ===== -->
+<section class="procedure">
+  <span class="eyebrow">For Registered Partners</span>
+  <h2>Client Registration Procedure</h2>
+  <p>To keep our cooperation transparent and protect both your commission and the client relationship, client registration is always the first step. Property details, legal documentation, and any further materials are shared with partners only after a client has been registered through the process below.</p>
+
+  <h3>How it works</h3>
+  <ol>
+    <li>Send an email to <strong>info@dkg-development.com</strong>, or submit the form below, with the client's full name, email, and phone number.</li>
+    <li>Use the subject line: <strong>Registration of a new client — [Name Surname]</strong></li>
+    <li>Once the registration is confirmed, our team will follow up with the relevant property information, pricing, and documentation for that client.</li>
+  </ol>
+
+  <div class="format-card">
+    <span class="fc-label">Email Format</span>
+    <p><strong>Subject:</strong> Registration of a new client – NAME SURNAME</p>
+    <p><strong>Name:</strong> NAME SURNAME</p>
+    <p><strong>Email:</strong> example***@gmail.com</p>
+    <p style="margin-bottom:0;"><strong>Phone number:</strong> +30 698 000 ***</p>
+  </div>
+
+  <p class="procedure-note">Registering a client through the form below sends the request directly to our partnerships team — no separate email is required.</p>
+
+  <div class="signature">
+    <p>Kind regards,</p>
+    <p class="sig-name">DKG Development — Partnerships Team</p>
+    <a href="mailto:info@dkg-development.com">info@dkg-development.com</a>
+  </div>
+</section>
+
+<!-- ===== Lead registration form ===== -->
+<section class="lead-form-section">
+  <div class="lead-form">
+    <form id="leadForm" onsubmit="return submitLead(event)">
+      <label for="l-name">Client full name</label>
+      <input id="l-name" type="text" required placeholder="e.g. Maria Papadopoulou">
+
+      <label for="l-email">Client email</label>
+      <input id="l-email" type="email" required placeholder="example@gmail.com">
+
+      <label for="l-phone">Client phone number</label>
+      <input id="l-phone" type="tel" required placeholder="+30 698 000 0000">
+
+      <label for="l-asset">Interested asset (optional)</label>
+      <select id="l-asset">
+        <option value="">— Not specified —</option>
+        <option>Elite Living</option>
+        <option>Piraeus Urban Living</option>
+        <option>Real Ideal</option>
+        <option>Kallergi Signature</option>
+        <option>Alimos, Trikoupi</option>
+        <option>Argentum</option>
+        <option>Athens City Center Loft</option>
+        <option>The Green (Serviced Apartments)</option>
+        <option>Wyndham Residences Piraeus Marina Zeas</option>
+        <option>The Green Retail</option>
+        <option>Skyway Retail</option>
+      </select>
+
+      <label for="l-notes">Notes (optional)</label>
+      <textarea id="l-notes" placeholder="Budget range, timeline, additional context…"></textarea>
+
+      <button type="submit" class="btn-send">Register Client</button>
+      <p class="lead-form-note">This sends a registration request to info@dkg-development.com using the required subject-line format automatically.</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="brand">STORNOWAY</div>
+      <p style="max-width:260px;font-size:0.85rem;line-height:1.6;margin-top:14px;color:#8FA0A7;">Development portfolio across Athens and Piraeus, maintained for our referral and brokerage partners.</p>
+    </div>
+    <div class="cols">
+      <div class="col">
+        <h4>Portfolio</h4>
+        <a href="residential.html">Residential</a>
+        <a href="golden-visa.html">Golden Visa</a>
+        <a href="yielding-assets.html">Yielding Assets</a>
+        <a href="commercial.html">Commercial</a>
+      </div>
+      <div class="col">
+        <h4>Partners</h4>
+        <a href="cooperation.html">Cooperation Agreement</a>
+        <a href="register-a-lead.html">Register a Lead</a>
+        <a href="mailto:info@dkg-development.com">Contact</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Stornoway Development. Partner Portal.</span>
+    <span>All figures marked “Уточняется” are pending confirmation.</span>
+  </div>
+</footer>
+
+<script>
+  function submitLead(e){
+    e.preventDefault();
+    var name = document.getElementById('l-name').value;
+    var email = document.getElementById('l-email').value;
+    var phone = document.getElementById('l-phone').value;
+    var asset = document.getElementById('l-asset').value;
+    var notes = document.getElementById('l-notes').value;
+
+    var subject = encodeURIComponent('Registration of a new client – ' + name);
+    var bodyLines = [
+      'Name: ' + name,
+      'Email: ' + email,
+      'Phone number: ' + phone
+    ];
+    if (asset) bodyLines.push('Interested asset: ' + asset);
+    if (notes) bodyLines.push('Notes: ' + notes);
+    var body = encodeURIComponent(bodyLines.join('\n'));
+
+    window.location.href = 'mailto:info@dkg-development.com?subject=' + subject + '&body=' + body;
+    return false;
+  }
+
+  document.querySelectorAll('.main-nav a').forEach(function(a){
+    a.addEventListener('click', function(){ document.querySelector('.main-nav').classList.remove('open'); });
+  });
+</script>
+
+</body>
+</html>
