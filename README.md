@@ -1,6 +1,6 @@
-# Stornoway Partner Portal
+# Partner Portal
 
-Static website for the Stornoway / DKG Development partner portal — the
+Static website for the DKG Development partner portal — the
 development portfolio across Athens and Piraeus, maintained for referral
 and brokerage partners. Built as plain HTML/CSS so it can be hosted on
 GitHub Pages with no build step.
