@@ -3,18 +3,22 @@
 
    HOW TO ENABLE HUBSPOT:
    1. In HubSpot create a form with these field internal names:
-        email                 (Email)            – required
-        firstname             (First name)
-        phone                 (Phone number)
-        message               (Message)
-        property_of_interest  (single-line text custom property)
+        email      (Email)        – required
+        firstname  (First name)
+        lastname   (Last name)
+        phone      (Phone number)
+        message    (Message)
    2. Fill in the two values below (Portal/Hub ID and the Form GUID).
+
+   The visitor's single "Your name" field is split into firstname + lastname.
+   The asset they enquired about is prepended to the Message, so it's captured
+   even though the form has no dedicated property field.
 
    Until both values are set, the form safely falls back to opening a
    pre-filled email to INQUIRY_EMAIL — so nothing breaks in the meantime.
    ============================================================ */
-var HUBSPOT_PORTAL_ID = "";   // e.g. "1234567"
-var HUBSPOT_FORM_GUID = "";   // e.g. "0a1b2c3d-4e5f-6789-abcd-ef0123456789"
+var HUBSPOT_PORTAL_ID = "48125838";                              // Portal / Hub ID
+var HUBSPOT_FORM_GUID = "196de176-8ffd-42d8-a962-ee639c075bab";  // Form GUID
 var INQUIRY_EMAIL     = "info@dkg-development.com";
 
 function hubspotEnabled(){
@@ -64,13 +68,22 @@ function submitInquiry(e){
   var note = document.querySelector('#inquiryForm .note-pending');
   if(btn){ btn.disabled = true; btn.textContent = 'Sending…'; }
 
+  // Split the single "Your name" field into first/last name for HubSpot.
+  var trimmed = (name || '').trim();
+  var sp = trimmed.indexOf(' ');
+  var firstName = sp === -1 ? trimmed : trimmed.slice(0, sp);
+  var lastName  = sp === -1 ? ''      : trimmed.slice(sp + 1).trim();
+
+  // The form has no dedicated property field, so record the asset in the message.
+  var fullMessage = 'Property of interest: ' + asset + (message ? '\n\n' + message : '');
+
   var payload = {
     fields: [
       { name: "email", value: email },
-      { name: "firstname", value: name },
+      { name: "firstname", value: firstName },
+      { name: "lastname", value: lastName },
       { name: "phone", value: phone },
-      { name: "message", value: message },
-      { name: "property_of_interest", value: asset }
+      { name: "message", value: fullMessage }
     ],
     context: { pageUri: window.location.href, pageName: document.title }
   };
