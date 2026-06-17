@@ -126,6 +126,8 @@ section.cat{
 .meta-item .v{font-family:var(--serif); font-size:1.05rem; color:var(--ink);}
 .meta-item .k{font-family:var(--mono); font-size:0.62rem; letter-spacing:0.1em; text-transform:uppercase; color:#9AA5AA; display:block; margin-bottom:4px;}
 .meta-item .v.pending{color:#B0A287; font-family:var(--sans); font-style:italic; font-size:0.92rem;}
+.meta-item .v a{color:var(--marina); text-decoration:underline; text-underline-offset:2px; transition:color .18s ease;}
+.meta-item .v a:hover{color:var(--terracotta);}
 
 .asset-desc{font-size:0.92rem; line-height:1.65; color:var(--ink-soft);}
 .asset-desc.pending{font-style:italic; color:#A89A7E;}
