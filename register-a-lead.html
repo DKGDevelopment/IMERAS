@@ -125,6 +125,20 @@
 </footer>
 
 <script>
+  /* "Register Client" lead form -> HubSpot Forms API.
+     Falls back to a pre-filled registration email on error / if unset. */
+  var LEAD_PORTAL_ID = "48125838";
+  var LEAD_FORM_GUID = "dbe9290b-6922-49f2-bb27-b0f27f301237";
+  var LEAD_EMAIL     = "info@dkg-development.com";
+
+  function leadMailtoFallback(name, email, phone, asset, notes){
+    var subject = encodeURIComponent('Registration of a new client – ' + name);
+    var bodyLines = ['Name: ' + name, 'Email: ' + email, 'Phone number: ' + phone];
+    if (asset) bodyLines.push('Interested asset: ' + asset);
+    if (notes) bodyLines.push('Notes: ' + notes);
+    window.location.href = 'mailto:' + LEAD_EMAIL + '?subject=' + subject + '&body=' + encodeURIComponent(bodyLines.join('\n'));
+  }
+
   function submitLead(e){
     e.preventDefault();
     var name = document.getElementById('l-name').value;
@@ -133,17 +147,46 @@
     var asset = document.getElementById('l-asset').value;
     var notes = document.getElementById('l-notes').value;
 
-    var subject = encodeURIComponent('Registration of a new client – ' + name);
-    var bodyLines = [
-      'Name: ' + name,
-      'Email: ' + email,
-      'Phone number: ' + phone
-    ];
-    if (asset) bodyLines.push('Interested asset: ' + asset);
-    if (notes) bodyLines.push('Notes: ' + notes);
-    var body = encodeURIComponent(bodyLines.join('\n'));
+    // No HubSpot configured -> fall back to email.
+    if(!LEAD_PORTAL_ID || !LEAD_FORM_GUID){
+      leadMailtoFallback(name, email, phone, asset, notes);
+      return false;
+    }
 
-    window.location.href = 'mailto:info@dkg-development.com?subject=' + subject + '&body=' + body;
+    // Split the single "Client full name" into first/last name for HubSpot.
+    var trimmed = (name || '').trim();
+    var sp = trimmed.indexOf(' ');
+    var firstName = sp === -1 ? trimmed : trimmed.slice(0, sp);
+    var lastName  = sp === -1 ? ''      : trimmed.slice(sp + 1).trim();
+
+    var btn = document.querySelector('#leadForm .btn-send');
+    var note = document.querySelector('#leadForm .lead-form-note');
+    if(btn){ btn.disabled = true; btn.textContent = 'Sending…'; }
+
+    var fields = [
+      { name: "email", value: email },
+      { name: "firstname", value: firstName },
+      { name: "lastname", value: lastName },
+      { name: "phone", value: phone },
+      { name: "message", value: notes }
+    ];
+    if(asset){ fields.push({ name: "interested_asset", value: asset }); }
+
+    fetch('https://api.hsforms.com/submissions/v3/integration/submit/' + LEAD_PORTAL_ID + '/' + LEAD_FORM_GUID, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ fields: fields, context: { pageUri: window.location.href, pageName: document.title } })
+    }).then(function(res){
+      if(!res.ok) throw new Error('HubSpot ' + res.status);
+      document.getElementById('leadForm').reset();
+      if(btn){ btn.textContent = 'Client Registered ✓'; }
+      if(note){ note.textContent = 'Thank you — the client has been registered. Our team will follow up shortly.'; }
+    }).catch(function(){
+      // Never lose the registration -> fall back to email.
+      if(btn){ btn.disabled = false; btn.textContent = 'Register Client'; }
+      leadMailtoFallback(name, email, phone, asset, notes);
+    });
+
     return false;
   }
 
