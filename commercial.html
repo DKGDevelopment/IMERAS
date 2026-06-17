@@ -98,7 +98,7 @@
           <div class="meta-item"><span class="k">Location</span><span class="v"><a href="https://maps.app.goo.gl/eCx8VJKeYBewYsuq8" target="_blank" rel="noopener">Piraeus</a></span></div>
           <div class="meta-item"><span class="k">Floor area</span><span class="v">84.5 sqm</span></div>
           <div class="meta-item"><span class="k">Price</span><span class="v">€400,000</span></div>
-          <div class="meta-item"><span class="k">Tenant</span><span class="v">No tenant</span></div>
+          <div class="meta-item"><span class="k">Tenant</span><span class="v">Lease-Up Phase</span></div>
         </div>
         <p class="asset-desc">Asset Resources</p>
         <div class="doc-links">
@@ -133,7 +133,7 @@
           <div class="meta-item"><span class="k">Location</span><span class="v"><a href="https://maps.app.goo.gl/hU9Y1EzNb8ydWDbK8" target="_blank" rel="noopener">Piraeus</a></span></div>
           <div class="meta-item"><span class="k">Floor area</span><span class="v">335.34 sqm</span></div>
           <div class="meta-item"><span class="k">Price</span><span class="v">€1,000,000</span></div>
-          <div class="meta-item"><span class="k">Tenant</span><span class="v">No tenant</span></div>
+          <div class="meta-item"><span class="k">Tenant</span><span class="v">Lease-Up Phase</span></div>
         </div>
         <p class="asset-desc">Asset Resources</p>
         <div class="doc-links">
@@ -203,31 +203,7 @@
   </div>
 </div>
 
-<script>
-  function openInquiry(assetName){
-    document.getElementById('inquiryAsset').textContent = 'Asset: ' + assetName;
-    document.getElementById('inquiryForm').dataset.asset = assetName;
-    document.getElementById('inquiryWrap').classList.add('open');
-  }
-  function closeInquiry(){ document.getElementById('inquiryWrap').classList.remove('open'); }
-  function submitInquiry(e){
-    e.preventDefault();
-    var asset = document.getElementById('inquiryForm').dataset.asset || 'General';
-    var name = document.getElementById('f-name').value;
-    var email = document.getElementById('f-email').value;
-    var phone = document.getElementById('f-phone').value;
-    var message = document.getElementById('f-message').value;
-    var subject = encodeURIComponent('Partner Inquiry: ' + asset);
-    var body = encodeURIComponent('Asset: ' + asset + '\n' + 'Name: ' + name + '\n' + 'Email: ' + email + '\n' + 'Phone: ' + phone + '\n\n' + 'Message:\n' + message);
-    window.location.href = 'mailto:info@dkg-development.com?subject=' + subject + '&body=' + body;
-    closeInquiry();
-    return false;
-  }
-  document.getElementById('inquiryWrap').addEventListener('click', function(e){ if(e.target === this) closeInquiry(); });
-  document.querySelectorAll('.main-nav a').forEach(function(a){
-    a.addEventListener('click', function(){ document.querySelector('.main-nav').classList.remove('open'); });
-  });
-</script>
+<script src="inquiry.js"></script>
 
 </body>
 </html>
