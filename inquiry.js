@@ -113,6 +113,21 @@ document.addEventListener('DOMContentLoaded', function(){
   if(wrap){ wrap.addEventListener('click', function(e){ if(e.target === this) closeInquiry(); }); }
   var note = document.querySelector('#inquiryForm .note-pending');
   if(note){ note.textContent = defaultInquiryNote(); }
+
+  // Order asset cards by price (low -> high) within each category grid.
+  // Cards without a numeric data-price are pushed to the end.
+  document.querySelectorAll('.asset-grid').forEach(function(grid){
+    var cards = Array.prototype.slice.call(grid.querySelectorAll('.asset-card'));
+    cards.sort(function(a, b){
+      var pa = parseInt(a.getAttribute('data-price'), 10);
+      var pb = parseInt(b.getAttribute('data-price'), 10);
+      if(isNaN(pa)) pa = Infinity;
+      if(isNaN(pb)) pb = Infinity;
+      return pa - pb;
+    });
+    cards.forEach(function(c){ grid.appendChild(c); });
+  });
+
   document.querySelectorAll('.main-nav a').forEach(function(a){
     a.addEventListener('click', function(){ document.querySelector('.main-nav').classList.remove('open'); });
   });
