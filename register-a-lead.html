@@ -64,6 +64,12 @@
 <section class="lead-form-section">
   <div class="lead-form">
     <form id="leadForm" onsubmit="return submitLead(event)">
+      <label for="l-agency">Agency name</label>
+      <input id="l-agency" type="text" required placeholder="e.g. Athens Realty Partners">
+
+      <label for="l-agent-email">Agent contact email</label>
+      <input id="l-agent-email" type="email" required placeholder="you@youragency.com">
+
       <label for="l-name">Client full name</label>
       <input id="l-name" type="text" required placeholder="e.g. Maria Papadopoulou">
 
@@ -80,8 +86,6 @@
         <option>Piraeus Urban Living</option>
         <option>Real Ideal</option>
         <option>Kallergi Signature</option>
-        <option>Argentum</option>
-        <option>Athens City Center Loft</option>
         <option>The Green (Serviced Apartments)</option>
         <option>Wyndham Residences Piraeus Marina Zeas</option>
         <option>The Green Retail</option>
@@ -131,9 +135,15 @@
   var LEAD_FORM_GUID = "dbe9290b-6922-49f2-bb27-b0f27f301237";
   var LEAD_EMAIL     = "info@dkg-development.com";
 
-  function leadMailtoFallback(name, email, phone, asset, notes){
+  function leadMailtoFallback(agency, agentEmail, name, email, phone, asset, notes){
     var subject = encodeURIComponent('Registration of a new client – ' + name);
-    var bodyLines = ['Name: ' + name, 'Email: ' + email, 'Phone number: ' + phone];
+    var bodyLines = [
+      'Agency: ' + agency,
+      'Agent contact email: ' + agentEmail,
+      'Name: ' + name,
+      'Email: ' + email,
+      'Phone number: ' + phone
+    ];
     if (asset) bodyLines.push('Interested asset: ' + asset);
     if (notes) bodyLines.push('Notes: ' + notes);
     window.location.href = 'mailto:' + LEAD_EMAIL + '?subject=' + subject + '&body=' + encodeURIComponent(bodyLines.join('\n'));
@@ -141,6 +151,8 @@
 
   function submitLead(e){
     e.preventDefault();
+    var agency = document.getElementById('l-agency').value;
+    var agentEmail = document.getElementById('l-agent-email').value;
     var name = document.getElementById('l-name').value;
     var email = document.getElementById('l-email').value;
     var phone = document.getElementById('l-phone').value;
@@ -149,7 +161,7 @@
 
     // No HubSpot configured -> fall back to email.
     if(!LEAD_PORTAL_ID || !LEAD_FORM_GUID){
-      leadMailtoFallback(name, email, phone, asset, notes);
+      leadMailtoFallback(agency, agentEmail, name, email, phone, asset, notes);
       return false;
     }
 
@@ -163,12 +175,17 @@
     var note = document.querySelector('#leadForm .lead-form-note');
     if(btn){ btn.disabled = true; btn.textContent = 'Sending…'; }
 
+    // The HubSpot form has no dedicated agency/agent-email properties, so
+    // fold them into the top of the message.
+    var messageLines = ['Agency: ' + agency, 'Agent contact email: ' + agentEmail];
+    if (notes) messageLines.push('', notes);
+
     var fields = [
       { name: "email", value: email },
       { name: "firstname", value: firstName },
       { name: "lastname", value: lastName },
       { name: "phone", value: phone },
-      { name: "message", value: notes }
+      { name: "message", value: messageLines.join('\n') }
     ];
     if(asset){ fields.push({ name: "interested_asset", value: asset }); }
 
@@ -184,7 +201,7 @@
     }).catch(function(){
       // Never lose the registration -> fall back to email.
       if(btn){ btn.disabled = false; btn.textContent = 'Register Client'; }
-      leadMailtoFallback(name, email, phone, asset, notes);
+      leadMailtoFallback(agency, agentEmail, name, email, phone, asset, notes);
     });
 
     return false;
